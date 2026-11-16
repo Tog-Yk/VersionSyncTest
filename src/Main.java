@@ -4,6 +4,8 @@ public class Main {
 
         Build build = buildProject();
 
+        DependentProject.method(projectVersion);
+
         System.out.println("Success");
     }
 
