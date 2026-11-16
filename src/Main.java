@@ -4,7 +4,7 @@ public class Main {
 
         Build build = buildProject();
 
-        DependentProject.method(projectVersion);
+        DependentProject.replacement(projectVersion);
 
         System.out.println("Success");
     }
