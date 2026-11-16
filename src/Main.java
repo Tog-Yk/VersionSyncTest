@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        int projectVersion = 4;
+        int projectVersion = 3;
 
         Build build = buildProject();
 
