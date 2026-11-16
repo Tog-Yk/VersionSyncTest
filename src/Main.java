@@ -3,6 +3,7 @@ public class Main {
         int projectVersion = 3;
 
         Build build = buildProject();
+        build.select(2);
 
         DependentProject.method(projectVersion);
 
