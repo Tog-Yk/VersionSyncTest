@@ -28,22 +28,26 @@ jobs:
           branches='["3","5"]'
 
           matrix=$(jq -cn \
-            --argjson commits "$COMMITS" \
-            --argjson branches "$branches" \
-            '{
+          --argjson commits "$COMMITS" \
+          --argjson branches "$branches" \
+          '{
               include: [
-                $commits[] as $c |
-                $branches[] as $b |
-                {
-                  sha: $c.id,
-                  message: ($c.message | split("\n")[0]),
-                  branch: $b
-                }
+                $commits[]
+                | select(
+                    (.message | contains("[skip-sync]")) | not
+                  ) as $c
+                | $branches[] as $b
+                | {
+                    sha: $c.id,
+                    message: ($c.message | split("\n")[0]),
+                    branch: $b
+                  }
               ]
             }')
-
           echo "value=$matrix" >> "$GITHUB_OUTPUT"
-          echo "has_commits=$(jq -r 'length > 0' <<< "$COMMITS")" >> "$GITHUB_OUTPUT"
+      
+          count=$(jq '.include | length' <<< "$matrix")
+          echo "has_commits=$([[ "$count" -gt 0 ]] && echo true || echo false)" >> "$GITHUB_OUTPUT"
 
   sync:
     needs: prepare
