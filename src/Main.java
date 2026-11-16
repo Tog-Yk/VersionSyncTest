@@ -3,6 +3,7 @@ public class Main {
         int projectVersion = 5;
 
         Build build = buildProject();
+        build.select(2);
 
         DependentProject.replacement(projectVersion);
 
