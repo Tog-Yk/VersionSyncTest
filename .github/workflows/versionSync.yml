@@ -65,8 +65,8 @@ jobs:
           ref: ${{ matrix.branch }}
           fetch-depth: 0
 
-      - name: Fetch main
-        run: git fetch origin main
+      - name: Fetch master
+        run: git fetch origin master
 
       # Extract ONLY the changes introduced by this commit
       - name: Generate commit patch
@@ -82,7 +82,7 @@ jobs:
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           fi
 
-      # Apply changes without merging main
+      # Apply changes without merging master
       - name: Apply commit changes
         if: steps.patch.outputs.has_changes == 'true'
         run: |
@@ -106,7 +106,7 @@ jobs:
           body: |
             Automatically generated version synchronization.
 
-            Source branch: main
+            Source branch: master
             Target branch: ${{ matrix.branch }}
 
             Commit: ${{ matrix.sha }}
